@@ -1,0 +1,69 @@
+//the program gives output only after the user has entered the details for all the test cases
+
+#include<stdio.h>
+int main()
+{
+    int TestCases=0,L,i=0, add =0, multi =1;
+    bool rev = false;
+    printf("enter number of test cases :");
+    scanf("%d",&TestCases);
+    int result[TestCases][2000];
+    for(i=0; i<TestCases; i++)				\\ loop for each test case
+    {
+        printf("enter length of list");
+        scanf("%d",&L);
+        int arr[L];
+        printf("Start entering values : ");
+        for (int j =0; j<L; j++)
+             scanf("%d",&arr[j]);
+        int A,B,C;
+        printf("ENter values for A,B,C :");
+        scanf("%d%d%d",&A,&B,&C);
+        char str[L];
+        printf("Enter the String of length %d :",L);
+        scanf("%s",&str);
+        rev = false;
+        for(int j = 0; j<L; j++)
+        {
+            switch(str[j])
+            {
+            case 'A' :					\\for Addition
+                for(int k = 0; k<L; k++)
+                     arr[k] = arr[k] + A;
+                break;
+            case 'R' :					\\Flag for reverse
+                rev = !rev;
+                break;
+            case 'M' :					\\for multiplication
+                for(int k = 0; k<L; k++)
+                    arr[k] = arr[k] * B;
+                break;
+            default :
+                printf("\n Wrong Input");
+                break;
+            }
+        }
+        if(rev)
+        {
+            for(int j=0; j<L; j++)
+                result[i][j] = (arr[L-j-1] % C);
+        }
+        else
+        {
+            for(int j=0; j<L; j++)
+                result[i][j] = arr[j] % C;
+        }
+        result[i][L] = -1;
+    }
+    for(int i = 0; i<TestCases; i++)			\\final output
+    {
+        printf("\n");
+        int j = 0;
+        while(result[i][j] != -1)
+        {
+            printf("%d ",result[i][j]);
+            j++;
+        }
+        printf("\n");
+    }
+}
