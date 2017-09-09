@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <math.h>
+long long gcd_product = 1;  					//final GCD counter
+int gcd(int a, int b)						//calculate GCD for 2 numbers
+{
+	if(a == 0 && b == 0)
+	return 1;
+	if (a == 0)
+        return b;
+    return gcd(b%a, a);	
+}
+int findGCD(int arr[], int n)					//calculate GCD for array
+{
+    int result = arr[0];
+    for (int i=1; i<n; i++)
+    {
+    	if(result == 0 && arr[i] != 0)
+    	{
+	    	result = arr[i];
+	    }
+	    else if (arr[i] == 0 && result != 0)
+		{
+    			
+    	}
+    	else
+		result = gcd(arr[i], result);
+    }
+        
+ 
+    return result;
+}
+void findPowerSet(int *set, int set_size)	 		//finding the powerset of the set
+{
+    /*set_size of power set of a set with set_size
+      n is (2**n -1)*/
+    unsigned int pow_set_size = pow(2, set_size);
+    int counter, j;
+ 	int array[set_size];
+ 	
+    
+    for(counter = 0; counter < pow_set_size; counter++)
+    {
+    	int k=1;
+   		for(int i = 0; i<set_size; i++)
+ 		array[i]=0;
+      for(j = 0; j < set_size; j++)
+       {
+          /* Check if jth bit in the counter is set
+             If set then input jth element from set */
+          if(counter & (1<<j))
+          {
+          		 
+          		 array[j] = set[j];			//input the subset into the array
+          		 k = set[j];
+          }
+           
+       }
+       for(int i = 0; i<set_size; i++)
+ 		if(array[i]==0)
+ 			array[i]=k;
+       
+      gcd_product = gcd_product * findGCD(array,set_size);
+       
+    }
+}
+ 
+
+int main()							//Driver program to test findPowerSet
+{
+	int TestCases,n;
+	printf("ENter the number of test cases : ");
+	scanf("%d",&TestCases);
+	
+	for(int i = 0;i<TestCases;i++)
+	{
+		gcd_product = 1;				//innitialize product after every test case
+		printf("\n Enter the number of elements : ");
+		scanf("%d",&n);
+		int set[n];
+		printf("\n Start entering the elements: ");
+		for(int j = 0;j<n;j++)
+		{
+			scanf("%d",&set[j]);
+		}
+    	findPowerSet(set, n);	
+    	printf(" GCD Product is : %lld", gcd_product % 1000000007);
+	}
+    
+ 
+    getchar();
+    return 0;
+}
