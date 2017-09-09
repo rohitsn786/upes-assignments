@@ -1,0 +1,50 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+
+int distance(int x1, int x2, int y1, int y2) //Returns the distance between two points p(x1,y1) and q(x2,y2) 
+{
+		return (abs(x1-x2)+abs(y1-y2));
+}
+int main()
+{
+	printf("\nEnter Values For A : ");
+	int a[2];
+	scanf("%d%d",&a[0],&a[1]);
+	
+	printf("\nEnter Values For B : ");
+	int b[2];
+	scanf("%d%d",&b[0],&b[1]);
+	
+	printf("\nEnter Values For C : ");
+	int c[2];
+	scanf("%d%d",&c[0],&c[1]);
+	
+	printf("\nEnter Values For X : ");
+	int x[2];
+	scanf("%d%d",&x[0],&x[1]);
+	
+	printf("\nEnter Values For Y : ");
+	int y[2];
+	scanf("%d%d",&y[0],&y[1]);	
+	
+	int A_B= distance(a[0], b[0], a[1], b[1]);  //Initial Distance to e travelled 
+	int A_C_Y_B = distance(a[0],c[0],a[1],c[1]) + distance(c[0],y[0],c[1],y[1]) + distance(y[0],b[0],y[1],b[1]); //Final Distance if Y is picked up
+	int A_C_X_B = distance(a[0],c[0],a[1],c[1]) + distance(c[0],x[0],c[1],x[1]) + distance(x[0],b[0],x[1],b[1]); //Final Distance if X is picked up
+	
+	if((A_C_X_B <= (2*A_B)) && (A_C_Y_B <= (2*A_B)))  //IF both pickups are possible
+	{
+		if (A_C_Y_B < A_C_X_B)   			//If Y is closer
+			printf("\n Go to : 2");
+		else
+			printf("\n Go to : 1");
+	}
+	else if ((A_C_X_B <= (2*A_B)) && (A_C_Y_B > (2*A_B)))  //If only X's pickup is possible
+		printf("\n Go to : 1");
+	
+	else if ((A_C_X_B > (2*A_B)) && (A_C_Y_B <= (2*A_B)))  // If only Y's Pickup is possible
+		printf("\n GO to : 2");
+	else 							//If no pickups are possible 
+		printf("\n Go directly : -1");
+}
