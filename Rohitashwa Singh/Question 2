@@ -1,0 +1,43 @@
+#include<stdio.h>
+#include<conio.h>
+
+int main()
+{
+	printf ("Enter the Number of passengers : ");
+	int n;
+	scanf("%d",&n);
+	printf("Enter ready time for every passenger in the range [0, 86400 - 1]: ");
+	int readyTime[n];
+	for(int i = 0;  i<n; i++)
+		scanf("%d",&readyTime[i]);
+	printf("Enter Travel time for every passenger : ");
+	int travelTime[n];
+	for(int i = 0;  i<n; i++)
+		scanf("%d",&travelTime[i]);
+	printf("Enter cancel time for every passenger in the range [0, 86400 - 1]: ");
+	int cancelTime[n];
+	for(int i = 0;  i<n; i++)
+		scanf("%d",&cancelTime[i]);
+		
+	int TotalTime = 0;
+	for(int i = 0; i<n; i++)
+	{
+		if(TotalTime<=readyTime[i])					// if he reaches before time then will wait till the ready time
+		{
+			TotalTime = readyTime[i] + travelTime[i];
+		}
+		else if(TotalTime>readyTime[i] && TotalTime<=cancelTime[i])	// if he reaches after ready time but before cancel time then just add the travel time
+		{
+			TotalTime = TotalTime + travelTime[i];
+		}
+		else if(TotalTime > cancelTime[i])				// if he reaches after ride is cancelled then status -1 
+		{
+			printf("Not Possible (ride cancelled) : status = -1");
+			
+		}
+	}
+	if(TotalTime > 86400)							// if total travel time is more than 24 hrs then impossible
+		printf("Not Possible (travel time exceeds 86400secs) : status = -1");
+	else
+		printf("Possible and time required is : %d", TotalTime);
+}
